@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import GlitchText from './GlitchText';
 import DaySelector from './DaySelector';
 import EventCard from './EventCard';
+import Background3D from './Background3D';
 
 // Mock Data
 const allEvents = [
@@ -26,18 +27,6 @@ const allEvents = [
 
 const SchedulePage = () => {
   const [selectedDay, setSelectedDay] = useState("Day 0");
-
-  // Simulation: Current Time is Day 0, 12:00 PM (Noon)
-  // This means e01 (ends 1pm) is LIVE
-  // e02 (starts 11am, ends 1pm) is LIVE
-  // e03 (starts 1pm) is UPCOMING
-  // But wait, to show 'Eliminated' (Ended), I should set time later or make an event end earlier.
-  // Let's set time to 12:30 PM.
-  // e01 ends 01:00 PM -> LIVE
-  // e02 ends 01:00 PM -> LIVE
-  // e03 starts 01:00 PM -> UPCOMING
-  // Let's add a past event to Day 0 to show "Eliminated"
-  // Added "Morning Yoga" e00
 
   const currentDay = "Day 0";
   const currentTimeMinutes = 12 * 60 + 30; // 12:30 PM
@@ -70,57 +59,62 @@ const SchedulePage = () => {
   const filteredEvents = displayEvents.filter(e => e.day === selectedDay);
 
   return (
-    <div className="min-h-screen p-4 md:p-8 relative overflow-hidden bg-squid-black">
-        {/* Background Gradients/Effects */}
-        <div className="fixed inset-0 pointer-events-none bg-[radial-gradient(circle_at_50%_0%,rgba(237,27,118,0.1),transparent_50%)]" />
-        <div className="fixed top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-squid-pink to-transparent opacity-50" />
+    <div className="min-h-screen relative overflow-hidden text-white">
 
-        <div className="max-w-7xl mx-auto relative z-10">
-           {/* Header */}
-           <div className="text-center mb-16 mt-12">
-             <GlitchText text="SCHEDULE" className="mb-2" />
-             <div className="flex items-center justify-center gap-4 mt-4 opacity-80">
-                <span className="h-[1px] w-12 bg-squid-teal"></span>
-                <p className="text-squid-teal font-rajdhani tracking-[0.4em] uppercase text-sm md:text-base">
-                  The Games Begin • AURA 2026
-                </p>
-                <span className="h-[1px] w-12 bg-squid-teal"></span>
-             </div>
-           </div>
+        {/* 3D Background Layer */}
+        <Background3D />
 
-           {/* Day Selector */}
-           <DaySelector selectedDay={selectedDay} onSelectDay={setSelectedDay} />
+        {/* Content Layer */}
+        <div className="relative z-10 p-4 md:p-8 min-h-screen overflow-y-auto">
+            <div className="fixed top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-squid-pink to-transparent opacity-50" />
 
-           {/* Grid */}
-           <motion.div
-             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-fr"
-           >
-             <AnimatePresence mode="popLayout">
-               {filteredEvents.map((event, index) => (
-                 <motion.div
-                   key={event.id}
-                   layout
-                   initial={{ opacity: 0, scale: 0.9, y: 30 }}
-                   animate={{ opacity: 1, scale: 1, y: 0 }}
-                   exit={{ opacity: 0, scale: 0.9, y: -20 }}
-                   transition={{
-                     duration: 0.4,
-                     delay: index * 0.1,
-                     ease: "easeOut"
-                   }}
-                 >
-                   <EventCard event={event} status={getStatus(event)} />
-                 </motion.div>
-               ))}
-             </AnimatePresence>
-           </motion.div>
+            <div className="max-w-7xl mx-auto">
+               {/* Header */}
+               <div className="text-center mb-16 mt-12">
+                 <GlitchText text="SCHEDULE" className="mb-2" />
+                 <div className="flex items-center justify-center gap-4 mt-4 opacity-80 mix-blend-screen">
+                    <span className="h-[1px] w-12 bg-squid-teal box-glow-teal"></span>
+                    <p className="text-squid-teal font-rajdhani tracking-[0.4em] uppercase text-sm md:text-base text-glow-teal">
+                      The Games Begin • AURA 2026
+                    </p>
+                    <span className="h-[1px] w-12 bg-squid-teal box-glow-teal"></span>
+                 </div>
+               </div>
 
-           {/* Footer / Empty State */}
-           {filteredEvents.length === 0 && (
-             <div className="text-center text-gray-500 py-20 font-rajdhani">
-               NO GAMES SCHEDULED
-             </div>
-           )}
+               {/* Day Selector */}
+               <DaySelector selectedDay={selectedDay} onSelectDay={setSelectedDay} />
+
+               {/* Grid */}
+               <motion.div
+                 className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-fr pb-20"
+               >
+                 <AnimatePresence mode="popLayout">
+                   {filteredEvents.map((event, index) => (
+                     <motion.div
+                       key={event.id}
+                       layout
+                       initial={{ opacity: 0, scale: 0.9, y: 30 }}
+                       animate={{ opacity: 1, scale: 1, y: 0 }}
+                       exit={{ opacity: 0, scale: 0.9, y: -20 }}
+                       transition={{
+                         duration: 0.4,
+                         delay: index * 0.1,
+                         ease: "easeOut"
+                       }}
+                     >
+                       <EventCard event={event} status={getStatus(event)} />
+                     </motion.div>
+                   ))}
+                 </AnimatePresence>
+               </motion.div>
+
+               {/* Footer / Empty State */}
+               {filteredEvents.length === 0 && (
+                 <div className="text-center text-gray-500 py-20 font-rajdhani backdrop-blur-sm bg-black/20 rounded-xl border border-white/5">
+                   NO GAMES SCHEDULED
+                 </div>
+               )}
+            </div>
         </div>
     </div>
   );
