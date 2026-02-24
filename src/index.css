@@ -1,0 +1,101 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Bebas+Neue&family=Saira+Stencil+One&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-squid-black text-squid-text font-rajdhani overflow-x-hidden cursor-none;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 3px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #050508;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-squid-pink rounded-sm;
+  }
+}
+
+@layer components {
+  /* Cursor */
+  .cursor-dot {
+    @apply fixed w-2 h-2 rounded-full bg-squid-pink pointer-events-none z-[99999] -translate-x-1/2 -translate-y-1/2 shadow-[0_0_14px_rgba(255,0,80,0.4)] transition-transform duration-75 ease-out;
+  }
+  .cursor-ring {
+    @apply fixed w-9 h-9 rounded-full border-[1.5px] border-squid-pink/50 pointer-events-none z-[99998] -translate-x-1/2 -translate-y-1/2 transition-all duration-200 ease-out;
+  }
+
+  /* Scanlines */
+  .scanlines {
+    @apply fixed inset-0 z-[9998] pointer-events-none;
+    background: repeating-linear-gradient(
+      to bottom, transparent 0px, transparent 3px,
+      rgba(0,0,0,0.045) 3px, rgba(0,0,0,0.045) 4px
+    );
+  }
+
+  /* Glitch Text Utility Classes (Complex Animations) */
+  .glitch {
+    @apply text-white font-orbitron font-black relative select-none inline-block tracking-widest;
+  }
+  .glitch::after, .glitch::before {
+    @apply content-[attr(data-text)] absolute top-0 text-white bg-transparent overflow-hidden clip-path-inset-0;
+  }
+  .glitch:not(.hover-only)::after {
+    @apply left-[4px] animate-[glitch-anim_3s_infinite_linear_alternate-reverse];
+    text-shadow: -4px 0 #ff0050;
+  }
+  .glitch:not(.hover-only)::before {
+    @apply -left-[4px] animate-[glitch-anim_2s_infinite_linear_alternate-reverse];
+    text-shadow: 4px 0 #00fff0;
+  }
+
+  /* Hover Only Glitch */
+  .glitch.hover-only::after, .glitch.hover-only::before {
+    @apply opacity-0 animate-none content-[''];
+  }
+  .glitch.hover-only:hover::after {
+    @apply content-[attr(data-text)] opacity-100 left-[4px] animate-[glitch-anim_3s_infinite_linear_alternate-reverse];
+    text-shadow: -4px 0 #ff0050;
+  }
+  .glitch.hover-only:hover::before {
+    @apply content-[attr(data-text)] opacity-100 -left-[4px] animate-[glitch-anim_2s_infinite_linear_alternate-reverse];
+    text-shadow: 4px 0 #00fff0;
+  }
+}
+
+/*
+  We define the Glitch keyframes here because standard Tailwind keyframes
+  don't support multiple properties like clip-path easily inside config without plugins.
+*/
+@keyframes glitch-anim {
+  0%   { clip-path: inset(19% 0 51% 0); }
+  6%   { clip-path: inset(11% 0 59% 0); }
+  12%  { clip-path: inset(26% 0 34% 0); }
+  18%  { clip-path: inset(43% 0 17% 0); }
+  24%  { clip-path: inset(7%  0 63% 0); }
+  30%  { clip-path: inset(33% 0 37% 0); }
+  36%  { clip-path: inset(14% 0 56% 0); }
+  42%  { clip-path: inset(28% 0 42% 0); }
+  48%  { clip-path: inset(52% 0 8%  0); }
+  54%  { clip-path: inset(22% 0 48% 0); }
+  60%  { clip-path: inset(8%  0 62% 0); }
+  66%  { clip-path: inset(37% 0 23% 0); }
+  72%  { clip-path: inset(16% 0 54% 0); }
+  78%  { clip-path: inset(44% 0 16% 0); }
+  84%  { clip-path: inset(29% 0 41% 0); }
+  90%  { clip-path: inset(12% 0 58% 0); }
+  100% { clip-path: inset(35% 0 35% 0); }
+}
+
+/* Custom utility for clip-path inset 0 */
+.clip-path-inset-0 {
+  clip-path: inset(0 0 0 0);
+}
