@@ -5,6 +5,8 @@ import Background3D from './Background3D';
 import SplineHero from './SplineHero';
 import GlitchText from './GlitchText';
 import EventCard from './EventCard';
+import SplineLoader from './SplineLoader';
+import RegistrationSection from './RegistrationSection';
 
 // ─── Data ─────────────────────────────────────────
 const SCHEDULE = [
@@ -73,6 +75,7 @@ export default function SchedulePage() {
 
   return (
     <>
+      <SplineLoader />
       <div className="cursor-dot"/>
       <div className="cursor-ring"/>
       <div className="scanlines"/>
@@ -320,9 +323,14 @@ export default function SchedulePage() {
         </section>
 
         {/* ══════════════════════════════════════════════
+            REGISTRATION SECTION
+        ══════════════════════════════════════════════ */}
+        <RegistrationSection />
+
+        {/* ══════════════════════════════════════════════
             FOOTER
         ══════════════════════════════════════════════ */}
-        <footer className="bg-[#030305] py-10 px-6 border-t border-squid-pink/10">
+        <footer className="bg-[#030305] py-10 px-6 border-t border-squid-pink/10 relative z-20">
           <div className="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-4">
             <div className="flex items-center gap-2.5">
               <svg width="22" height="22" viewBox="0 0 46 46">
