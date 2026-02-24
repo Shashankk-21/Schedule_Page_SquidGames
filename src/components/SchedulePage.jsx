@@ -66,23 +66,7 @@ const SchedulePage = () => {
     return 'upcoming';
   };
 
-  // Add a dummy past event for Day 0 if not present to show 'Eliminated'
   const displayEvents = [...allEvents];
-  if (selectedDay === 'Day 0') {
-      // Add a morning event that is over
-      if (!displayEvents.find(e => e.id === 'e00')) {
-          displayEvents.unshift({
-            id: "e00",
-            eventName: "Opening Keynote",
-            day: "Day 0",
-            category: "General",
-            venue: "Auditorium",
-            startTime: "09:00 AM",
-            endTime: "10:00 AM"
-          });
-      }
-  }
-
   const filteredEvents = displayEvents.filter(e => e.day === selectedDay);
 
   return (
