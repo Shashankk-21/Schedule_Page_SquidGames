@@ -215,9 +215,15 @@ export default function SchedulePage() {
         </section>
 
         {/* ══════════════════════════════════════════════
+            CONTENT WRAPPER
+        ══════════════════════════════════════════════ */}
+        <div className="relative z-10 bg-fixed bg-cover bg-center bg-no-repeat" style={{ backgroundImage: "url('/assets/squid-hero-bg.png')" }}>
+        <div className="absolute inset-0 bg-black/85 z-0 pointer-events-none"></div>
+
+        {/* ══════════════════════════════════════════════
             SCHEDULE SECTION
         ══════════════════════════════════════════════ */}
-        <section className="bg-squid-black/95 py-20 px-6 relative border-t border-squid-border-hi">
+        <section className="py-20 px-6 relative z-10 border-t border-squid-border-hi">
 
           {/* Section header */}
           <motion.div
@@ -348,6 +354,7 @@ export default function SchedulePage() {
             </span>
           </div>
         </footer>
+        </div>
       </div>
     </>
   );
