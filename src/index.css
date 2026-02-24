@@ -1,0 +1,34 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Rajdhani:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-squid-black text-white font-rajdhani overflow-x-hidden;
+    background-image: linear-gradient(to bottom, #121212, #0a0a0a);
+    min-height: 100vh;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-orbitron;
+  }
+}
+
+/* Custom Scrollbar for the vibe */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-squid-black;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-squid-pink rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-squid-pink-alt;
+}
