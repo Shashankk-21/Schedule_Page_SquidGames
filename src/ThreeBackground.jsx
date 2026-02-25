@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 
-export default function ThreeBackground({ variant = 'hero' }) {
+export default function ThreeBackground() {
   const mountRef = useRef(null);
 
   useEffect(() => {
