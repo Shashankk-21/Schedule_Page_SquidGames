@@ -1,8 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion'; // eslint-disable-line no-unused-vars
 import ThreeBackground from './ThreeBackground';
 import GlitchText      from './GlitchText';
 import EventCard        from './EventCard';
+import CountdownOverlay from './CountdownOverlay';
 import './schedule.css';
 
 // ─── Data ─────────────────────────────────────────
@@ -154,7 +155,7 @@ const DayShapeIcon = ({ shape, color, active, size=44 }) => {
 };
 
 // ─── Origami diamond ──────────────────────────────
-const OrigamiDiamond = ({ color, size=160, label, sublabel, onClick }) => (
+const OrigamiDiamond = ({ color, size=160, onClick }) => (
   <motion.button
     onClick={onClick}
     whileHover={{ scale:1.06, rotate: 47 }}
@@ -235,6 +236,7 @@ export default function SchedulePage() {
   const [activeDay, setActiveDay] = useState('Day 0');
   const [now, setNow]             = useState(new Date());
   const [isNavScrolled, setNavScrolled] = useState(false);
+  const [loading, setLoading]     = useState(true);
   const heroRef = useRef(null);
 
   useEffect(() => { const id = setInterval(() => setNow(new Date()), 1000); return () => clearInterval(id); }, []);
@@ -257,9 +259,14 @@ export default function SchedulePage() {
       <CustomCursor/>
       <div className="scanlines"/>
 
+      <AnimatePresence>
+        {loading && <CountdownOverlay onComplete={() => setLoading(false)} />}
+      </AnimatePresence>
+
       {/* ── Three.js BG ──────────────────────────────── */}
       <ThreeBackground/>
 
+      {!loading && (
       <div style={{ position:'relative', zIndex:2, minHeight:'100vh' }}>
 
         {/* ══════════════════════════════════════════════
@@ -808,6 +815,7 @@ export default function SchedulePage() {
           </div>
         </footer>
       </div>
+      )}
     </>
   );
 }

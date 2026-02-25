@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { motion } from 'framer-motion';
+import { motion } from 'framer-motion'; // eslint-disable-line no-unused-vars
 import { MapPin, Clock, Gamepad2, Trophy, Mic2, Shirt, Zap, Star } from 'lucide-react';
 import SpotlightCard from './SpotlightCard';
 
